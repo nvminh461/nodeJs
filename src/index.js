@@ -5,16 +5,24 @@ const path = require("node:path");
 const app = express();
 const port = 3000;
 
+// Static file
+app.use(express.static(path.join(__dirname, 'public')));
+
+// HTTP logger
 app.use(morgan('combined'));
 
 // Template engine
-app.engine('handlebars', handlebars());
-app.set('view engine', 'handlebars');
+app.engine('hbs', handlebars({
+    extname: '.hbs',
+}));
+app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 
+// Route
 app.get('/', (req, res) => {
    return res.render('home');
 })
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 })
