@@ -1,11 +1,15 @@
-const newsRouter = require('./news');
-const siteRouter = require('./site');
+const meRouter = require('./me');
+const courseRouter = require('./course');
 
 function routes(app) {
 
-    app.use('/news', newsRouter);
+    app.use('/me', meRouter);
 
-    app.use('/', siteRouter);
+    app.use('/courses', courseRouter);
+
+    // app.use(function (req, res, next) {
+    //     res.status(404).render('error/_404');
+    // });
 }
 
 module.exports = routes;

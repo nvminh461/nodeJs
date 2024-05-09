@@ -23,13 +23,12 @@ app.engine('hbs', handlebars({
     extname: '.hbs',
 }));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
-
+app.set('views', path.join(__dirname, 'resources', 'views'));
 //Home, search, contact
 
 // Route init
 routes(app);
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`App listening at http://localhost:${port}`);
 });
