@@ -144,6 +144,21 @@ Course.remove = (id, result) => {
     });
 };
 
+Course.removeByIds = (ids, result) => {
+    sql.query(`DELETE
+               FROM courses
+               WHERE id IN (${ids.join(",")})`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log(`deleted ${res.affectedRows} courses`);
+        result(null, res);
+    });
+};
+
 Course.removeAll = result => {
     sql.query("DELETE FROM courses", (err, res) => {
         if (err) {
