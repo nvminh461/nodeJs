@@ -1,0 +1,20 @@
+<div class="mt-4">
+    <h3>{{#if (equal action 'create')}}Create{{else}}Edit{{/if}} course</h3>
+    <form action="/courses/{{#if (equal action 'create')}}store{{else}}{{course.id}}/update?_method=PUT{{/if}}"
+          method="POST">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{course.name}}" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description"
+                      required>{{course.description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="video_id">Video Id</label>
+            <input type="text" class="form-control" id="video_id" name="video_id" value="{{course.video_id}}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">{{#if (equal action 'create')}}Create{{else}}Save{{/if}}</button>
+    </form>
+</div>

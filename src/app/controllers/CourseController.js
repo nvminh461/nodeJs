@@ -1,5 +1,5 @@
 const Course = require('../../models/Course');
-const handleErrors = require('../helpers/HandleErrors');
+const handleErrors = require('../helpers/handel-errors');
 
 class CourseController {
     // [GET] /
@@ -30,7 +30,9 @@ class CourseController {
 
     // [GET] /courses/create
     create(req, res) {
-        res.render('courses/create');
+        res.render('courses/form', {
+            action: 'create'
+        });
     }
 
     // [POST] /courses/store
@@ -45,7 +47,7 @@ class CourseController {
             if (err) {
                 handleErrors.handleErrors500(err, res);
             } else {
-                res.redirect('/me/stored/courses');
+                res.redirect('/customer/stored/courses');
             }
         });
     }
@@ -56,7 +58,8 @@ class CourseController {
             if (err) {
                 handleErrors.handleErrors500(err, res);
             } else {
-                res.render('courses/edit', {
+                res.render('courses/form', {
+                    action: 'edit',
                     course: data
                 });
             }
@@ -78,7 +81,7 @@ class CourseController {
             if (err) {
                 handleErrors.handleErrors500(err, res);
             } else {
-                res.redirect('/me/stored/courses');
+                res.redirect('/customer/stored/courses');
             }
         });
     }
@@ -89,7 +92,7 @@ class CourseController {
             if (err) {
                 handleErrors.handleErrors500(err, res);
             } else {
-                res.redirect('/me/stored/courses');
+                res.redirect('/customer/stored/courses');
             }
         });
     }
@@ -102,7 +105,7 @@ class CourseController {
                     if (err) {
                         handleErrors.handleErrors500(err, res);
                     } else {
-                        res.redirect('/me/stored/courses');
+                        res.redirect('/customer/stored/courses');
                     }
                 });
                 break;
