@@ -5,11 +5,13 @@ This is a step-by-step g uide for installing the project.
 
 ### Step 1: Clone Repository
 
-Use the following command to clone the repository to your machine:
+Use the following command to clone the repository to your machine and edit environment variables in the `.env` file.
 
 ```bash
 git clone https://github.com/nvminh461/nodeJs.git
 ```
+
+Edit environment variables in the `.env` file.
 
 ### Step 2: Install Dependencies
 
