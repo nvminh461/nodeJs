@@ -5,6 +5,10 @@ class CustomerController {
 
     // [GET] /customer/stored/courses
     storedCourses(req, res) {
+        let sort = {
+            sort: req.query._sort || 'id',
+            order: req.query.order || 'desc',
+        };
         Course.getAll('', (err, data) => {
             if (err) {
                 handleErrors(err, res);
@@ -14,7 +18,7 @@ class CustomerController {
                     entity: 'courses'
                 });
             }
-        });
+        }, sort);
     }
 
 }

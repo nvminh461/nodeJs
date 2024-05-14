@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nvminh461/blog_f8.git"
+    "url": "git+https://github.com/nvminh461/nodejs.git"
   },
   "author": "minhnv",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nvminh461/blog_f8/issues"
+    "url": "https://github.com/nvminh461/nodejs/issues"
   },
-  "homepage": "https://github.com/nvminh461/blog_f8#readme",
+  "homepage": "https://github.com/nvminh461/nodejs#readme",
   "description": "",
   "devDependencies": {
     "morgan": "^1.10.0",
