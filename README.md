@@ -55,3 +55,11 @@ To automatically compile SCSS files when changes are made, run the following com
 ```bash
 npm run watch
 ```
+
+### Step 4: Run migration database
+
+Migration database
+
+```bash
+db-migrate up
+```

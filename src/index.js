@@ -8,6 +8,8 @@ const routes = require('./routes');
 const methodOverride = require('method-override');
 const handlebarsHelpers = require(path.join(__dirname, 'app', 'helpers', 'handlebars-helpers'));
 const sortMiddleware = require('./app/middlewares/sort-middleware');
+const session = require('express-session');
+const menuMiddleware = require('./app/middlewares/menu');
 
 // Static file
 app.use(express.static(path.join(__dirname, 'public')));
@@ -26,6 +28,17 @@ app.use(sortMiddleware);
 
 // HTTP logger
 app.use(morgan('combined'));
+
+// Session
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: false}
+}));
+
+// Menu middleware
+app.use(menuMiddleware);
 
 // Template engine
 app.engine('hbs', handlebars({
