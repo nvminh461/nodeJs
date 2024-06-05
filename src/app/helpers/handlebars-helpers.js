@@ -65,11 +65,17 @@ const renderMenu = (menus) => {
     return new Handlebars.SafeString(result);
 };
 
+const parseJson = (json) => {
+    console.log(json, JSON.parse(json))
+    return JSON.parse(json);
+}
+
 module.exports = {
     sum,
     formatDateTime,
     greater,
     equal,
     sortable,
-    renderMenu
+    renderMenu,
+    parseJson,
 };

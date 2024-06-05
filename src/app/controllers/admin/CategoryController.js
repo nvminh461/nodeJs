@@ -21,6 +21,7 @@ class CategoryController {
                         entity: 'categories',
                         title: 'Category',
                         path: '/admin/categories',
+                        active: 'category',
                     });
             }
         }, sort);
@@ -35,6 +36,7 @@ class CategoryController {
                 title: 'Category',
                 action: 'create',
                 entity: 'categories',
+                active: 'add-category',
             });
     }
 
@@ -67,6 +69,7 @@ class CategoryController {
                         title: 'Category',
                         action: 'edit',
                         entity: 'categories',
+                        active: 'category',
                     });
             }
         });

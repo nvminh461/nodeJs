@@ -2,6 +2,7 @@ const HandelErrors = function (HandleErrors) {
 };
 
 HandelErrors.handleErrors500 = (err, res) => {
+    console.log(err.message)
     res.status(500).render(
         'error/_500',
         {error: err.message}

@@ -14,33 +14,30 @@ exports.setup = function (options, seedLink) {
     seed = seedLink;
 };
 
-
 exports.up = function (db) {
-    return db.createTable('products', {
+    return db.createTable('category_attributes', {
         id: {type: 'int', primaryKey: true, autoIncrement: true},
-        product_name: {type: 'string', length: 100, notNull: true},
-        description: {type: 'text'},
-        price: {type: 'decimal', notNull: true, precision: 10, scale: 2},
-        image: {type: 'string', length: 255},
-        sku: {type: 'string', length: 100},
         category_id: {
             type: 'int',
+            notNull: true,
             foreignKey: {
-                name: 'products_category_id_fk',
+                name: 'category_attributes_category_id_fk',
                 table: 'categories',
                 mapping: 'id',
                 rules: {
-                    onDelete: 'SET NULL'
-                }
-            }
+                    onDelete: 'CASCADE',
+                },
+            },
         },
+        attribute_name: {type: 'string', length: 100, notNull: true},
+        attribute_detail: {type: 'json', notNull: true},
         created_at: {type: 'timestamp', defaultValue: String('CURRENT_TIMESTAMP')},
         updated_at: {type: 'timestamp', defaultValue: String('CURRENT_TIMESTAMP')},
-    });
+    })
 };
 
 exports.down = function (db) {
-    return db.dropTable('products');
+    return db.dropTable('category_attributes');
 };
 
 exports._meta = {

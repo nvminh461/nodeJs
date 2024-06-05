@@ -117,5 +117,18 @@ Category.removeByIds = (ids, result) => {
     });
 }
 
+Category.getAllIdAndName = (result) => {
+    sql.query("SELECT id, category_name FROM categories", (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log("categories: ", res);
+        result(null, res);
+    });
+};
+
 
 module.exports = Category;
