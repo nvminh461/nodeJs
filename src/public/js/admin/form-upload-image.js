@@ -2,13 +2,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const imageContainer = document.getElementById('preview');
     const imageInput = document.getElementById('images');
     let files = [];
-
-    // add delete button to existing images and set value for input file
-    const checkImagesExist = () => {
-        const images = document.querySelectorAll('#preview img');
-        return images.length > 0;
-    };
-
     const handleFileSelect = (event) => {
         const newFiles = Array.from(event.target.files);
         imageContainer.innerHTML = '';

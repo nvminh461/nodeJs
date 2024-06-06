@@ -27,8 +27,8 @@ Product.create = async (newProduct, result) => {
 
 Product.updateById = (id, Product, result) => {
     sql.query(
-        "UPDATE products SET product_name = ?, description = ?, price = ?, image = ?, category_id = ? WHERE id = ?",
-        [Product.product_name, Product.description, Product.price, Product.image, Product.category_id, id],
+        "UPDATE products SET product_name = ?, description = ?, price = ?, image = ?, category_id = ?, updated_at = ? WHERE id = ?",
+        [Product.product_name, Product.description, Product.price, Product.image, Product.category_id, Product.updated_at, id],
         (err, res) => {
             if (err) {
                 result(err, null);

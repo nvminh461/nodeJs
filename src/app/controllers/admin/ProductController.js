@@ -6,6 +6,10 @@ class ProductController {
 
     // GET /admin/products
     index(req, res) {
+        let sort = {
+            sort: req.query._sort || 'id',
+            order: req.query.order || 'desc',
+        };
         Product.getAll(req.query.name, (err, data) => {
             if (err) {
                 handleErrors(err, res);
@@ -21,7 +25,7 @@ class ProductController {
                         active: 'product',
                     });
             }
-        }, req.query.sort);
+        }, sort);
     }
 
     // GET /admin/products/create

@@ -1,0 +1,127 @@
+<div class="mt-4">
+    <h3>{{#if (equal action 'create')}}Create{{else}}Edit{{/if}} {{title}}</h3>
+    <form id="attributeForm" action="admin/{{entity}}/{{#if
+            (equal action 'create')}}store{{else}}{{attribute.id}}/update?_method=PUT{{/if}}" method="POST">
+        <div class="form-group">
+            <label for="attribute_name">Attribute name</label>
+            <input type="text" class="form-control" id="attribute_name" name="attribute_name"
+                   value="{{attribute.attribute_name}}" required>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name="category_id" required>
+                <option value="">-- Select category --</option>
+                {{#each categories}}
+                    {{#with this}}
+                        <option value="{{id}}"
+                                {{#if (equal ../attribute.category_id id)}}selected{{/if}}>{{category_name}}</option>
+                    {{/with}}
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="attribute_detail">Attribute detail</label>
+            <table class="table table-bordered mt-2 dynamic-form">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each attribute_detail}}
+                    <tr>
+                        <td><input type="text" class="form-control" name="key[]" value="{{this.key}}" required></td>
+                        <td><input type="text" class="form-control" name="value[]" value="{{this.value}}" required></td>
+                        <td>
+                            <button type="button" class="btn btn-danger removeRow">Remove</button>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <button type="button" class="btn btn-primary addRow">Add</button>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const addRowButton = document.querySelector('.addRow');
+        const dynamicForm = document.querySelector('.dynamic-form tbody');
+
+        //when action is edit, we need to add a hidden input to the form to send the attribute_detail and add row with data attribute_detail
+        if ('{{action}}' === 'edit') {
+            try {
+                const attributeDetail = JSON.parse('{{{attribute.attribute_detail}}}');
+                attributeDetail.forEach(detail => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                <td><input type="text" class="form-control" name="key[]" value="${detail.key}" required></td>
+                <td><input type="text" class="form-control" name="value[]" value="${detail.value}" required></td>
+                <td>
+                    <button type="button" class="btn btn-danger removeRow">Remove</button>
+                </td>
+            `;
+                    dynamicForm.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Error parsing attribute_detail:', error);
+            }
+        }
+
+        const addRow = () => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="form-control" name="key[]" required></td>
+                <td><input type="text" class="form-control" name="value[]" required></td>
+                <td>
+                    <button type="button" class="btn btn-danger removeRow">Remove</button>
+                </td>
+            `;
+            dynamicForm.appendChild(tr);
+            bindRemoveButtons();
+        };
+
+        const bindRemoveButtons = () => {
+            const removeButtons = document.querySelectorAll('.removeRow');
+            removeButtons.forEach(button => {
+                button.removeEventListener('click', removeRow);
+                button.addEventListener('click', removeRow);
+            });
+        };
+
+        const removeRow = (e) => {
+            e.target.closest('tr').remove();
+        };
+
+        const handleFormSubmit = (e) => {
+            const keys = Array.from(document.querySelectorAll('input[name="key[]"]')).map(input => input.value);
+            const values = Array.from(document.querySelectorAll('input[name="value[]"]')).map(input => input.value);
+
+            const attributeDetails = keys.map((key, index) => ({
+                key: key,
+                value: values[index]
+            }));
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'attribute_detail');
+            hiddenInput.setAttribute('value', JSON.stringify(attributeDetails));
+
+            e.target.appendChild(hiddenInput);
+        };
+
+        addRowButton.addEventListener('click', addRow);
+
+        document.getElementById('attributeForm').addEventListener('submit', handleFormSubmit);
+
+        bindRemoveButtons();
+    });
+</script>

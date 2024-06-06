@@ -39,6 +39,26 @@ const menus = [
             },
         ],
     },
+    {
+        name: 'Attribute',
+        id: 'attribute',
+        path: '/admin/attributes',
+        icon: 'fas fa-th',
+        subMenus: [
+            {
+                name: 'List Attribute',
+                id: 'list-attribute',
+                path: '/admin/attributes',
+                icon: 'far fa-circle nav-icon',
+            },
+            {
+                name: 'Add Attribute',
+                id: 'add-attribute',
+                path: '/admin/attributes/create',
+                icon: 'far fa-circle nav-icon',
+            },
+        ],
+    },
 ];
 
 module.exports = menus;

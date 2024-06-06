@@ -1,7 +1,6 @@
 const Handlebars = require('handlebars');
 // Sum two numbers
 const sum = (a, b) => a + b;
-
 // Format date time
 const formatDateTime = (date) => {
     if (!date) {
@@ -65,9 +64,16 @@ const renderMenu = (menus) => {
     return new Handlebars.SafeString(result);
 };
 
+// Parse json
 const parseJson = (json) => {
     console.log(json, JSON.parse(json))
     return JSON.parse(json);
+}
+
+// Get field by id
+const getFieldById = (id, field, allEntities) => {
+    const item = allEntities.find(item => item.id === id);
+    return item ? item[field] : '';
 }
 
 module.exports = {
@@ -78,4 +84,5 @@ module.exports = {
     sortable,
     renderMenu,
     parseJson,
+    getFieldById
 };

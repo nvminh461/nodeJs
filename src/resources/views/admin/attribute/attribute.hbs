@@ -1,0 +1,112 @@
+<form class="mt-4" name="container-form" method="POST">
+    <div>
+        <div class="d-flex justify-content-between">
+            <h2>{{title}}</h2>
+            <a href="admin/{{entity}}/create" class="btn btn-primary">Create</a>
+        </div>
+        <div class="mt-4 d-flex align-items-center">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="check-all">
+                <label class="form-check-label" for="check-all">Select all</label>
+            </div>
+            <select class="form-control form-control-sm checkbox-select-all-options" name="action" required>
+                <option value="">-- Select options --</option>
+                <option value="delete">Delete</option>
+            </select>
+            <button class="btn btn-success btn-submit-mass-action btn-sm disabled">Execute</button>
+        </div>
+    </div>
+    <table class="table table-hover table-bordered mt-4">
+        <thead class="thead-dark">
+        <tr>
+            <th></th>
+            <th>
+                ID
+                {{{ sortable 'id' _sort path}}}
+            </th>
+            <th>
+                Name
+                {{{ sortable 'attribute_name' _sort path}}}
+            </th>
+            <th>
+                Category
+                {{{ sortable 'category_id' _sort path}}}
+            </th>
+            <th colspan="2" class="text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#if (greater attributes.length 0)}}
+            {{#each attributes}}
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="attributeIds[]" id="check-{{id}}"
+                                   value="{{id}}">
+                            <label class="form-check" for="check-{{id}}"></label>
+                        </div>
+                    </td>
+                    <th scope="row">{{id}}</th>
+                    <td>{{attribute_name}}</td>
+                    <td>{{ getFieldById category_id 'category_name' ../categories}}</td>
+                    <td class="text-center">
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"
+                           data-id="{{id}}"><i class="fa fa-trash"></i></a>
+                    </td>
+                    <td class="text-center">
+                        <a href="admin/attributes/{{id}}/edit" class="btn btn-info"><i
+                                class="fa fa-edit"></i></a>
+                    </td>
+                </tr>
+            {{/each}}
+        {{else}}
+            <tr>
+                <td colspan="8" class="text-center">No {{entity}} found</td>
+            </tr>
+        {{/if}}
+        </tbody>
+    </table>
+</form>
+<!-- confirm delete-->
+{{> modal/admin-confirm-delete}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let checkAll = $('#check-all');
+        let checkboxes = $('input[name="attributeIds[]"]');
+        let checkboxSelectAllOptions = $('.checkbox-select-all-options');
+        let containerForm = document.forms['container-form'];
+
+        checkAll.change(function () {
+            let isChecked = $(this).prop('checked');
+            checkboxes.prop('checked', isChecked);
+            renderButtonExecute.call(checkboxSelectAllOptions);
+        });
+
+        checkboxes.change(function () {
+            let isChecked = checkboxes.filter(':checked').length === checkboxes.length;
+            checkAll.prop('checked', isChecked);
+            renderButtonExecute.call(checkboxSelectAllOptions);
+        });
+
+        checkboxSelectAllOptions.change(renderButtonExecute);
+
+        $('.btn-submit-mass-action').click(function (e) {
+            e.preventDefault();
+            let isSubmit = !$(this).hasClass('disabled');
+            if (isSubmit) {
+                containerForm.action = 'admin/attributes/handle-form-actions';
+                containerForm.submit();
+            }
+        });
+
+        function renderButtonExecute() {
+            let selectedOption = $(this).val();
+            let checkedCheckboxes = checkboxes.filter(':checked');
+            if (selectedOption && checkedCheckboxes.length > 0) {
+                $('.btn-submit-mass-action').removeClass('disabled');
+            } else {
+                $('.btn-submit-mass-action').addClass('disabled');
+            }
+        }
+    });
+</script>
