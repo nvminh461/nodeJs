@@ -84,11 +84,15 @@ Course.getBySlug = (slug, result) => {
     });
 };
 
-Course.getAll = (name, result) => {
+Course.getAll = (name, result, sort) => {
     let query = "SELECT * FROM courses";
 
     if (name) {
         query += ` WHERE name LIKE '%${name}%'`;
+    }
+
+    if (sort) {
+        query += ` ORDER BY ${sort.sort} ${sort.order}`;
     }
 
     sql.query(query, (err, res) => {

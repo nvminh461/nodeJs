@@ -40,7 +40,7 @@ class CourseController {
         const course = new Course({
             name: req.body.name,
             description: req.body.description,
-            videoId: req.body.videoId,
+            videoId: req.body.video_id,
         });
 
         Course.create(course, (err, data) => {

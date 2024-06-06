@@ -20,11 +20,20 @@
         <thead class="thead-dark">
         <tr>
             <th></th>
-            <th>#</th>
-            <th>Name</th>
+            <th>
+                ID
+                {{{ sortable 'id' _sort null}}}
+            </th>
+            <th>
+                Name
+                {{{ sortable 'name' _sort null}}}
+            </th>
             <th>Description</th>
             <th>Video Id</th>
-            <th>Updated At</th>
+            <th>
+                Updated At
+                {{{ sortable 'updated_at' _sort}}}
+            </th>
             <th colspan="2" class="text-center">Actions</th>
         </tr>
         </thead>
@@ -39,7 +48,7 @@
                             <label class="form-check" for="check-{{id}}"></label>
                         </div>
                     </td>
-                    <th scope="row">{{ sum @index 1}}</th>
+                    <th scope="row">{{id}}</th>
                     <td>{{name}}</td>
                     <td>{{description}}</td>
                     <td>{{video_id}}</td>
