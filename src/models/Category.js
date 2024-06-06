@@ -62,8 +62,8 @@ Category.findById = (categoryId, result) => {
 
 Category.updateById = (id, Category, result) => {
     sql.query(
-        "UPDATE categories SET category_name = ?, description = ? WHERE id = ?",
-        [Category.category_name, Category.description, id],
+        "UPDATE categories SET category_name = ?, description = ?, updated_at= ? WHERE id = ?",
+        [Category.category_name, Category.description, Category.updated_at, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);
